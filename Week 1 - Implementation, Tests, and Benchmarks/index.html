@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 1 - Stack and Queue</title>
+</head>
+<body>
+  <script>
+    class Stack {
+      constructor() {
+        this.items = [];
+      }
+
+      push(item) {
+        this.items.push(item);
+      }
+
+      pop() {
+        return this.items.pop();
+      }
+
+      peek() {
+        return this.items[this.items.length - 1];
+      }
+
+      size() {
+        return this.items.length;
+      }
+
+      isEmpty() {
+        return this.items.length === 0;
+      }
+    }
+
+    class Queue {
+      constructor(capacity) {
+        if (!Number.isInteger(capacity) || capacity <= 0) {
+          throw new RangeError("Queue capacity must be a positive integer.");
+        }
+
+        this.capacity = capacity;
+        this.items = new Array(capacity);
+        this.head = 0;
+        this.tail = 0;
+        this.count = 0;
+      }
+
+      enqueue(item) {
+        if (this.isFull()) {
+          return false;
+        }
+
+        this.items[this.tail] = item;
+        this.tail = (this.tail + 1) % this.capacity;
+        this.count += 1;
+        return true;
+      }
+
+      dequeue() {
+        if (this.isEmpty()) {
+          return undefined;
+        }
+
+        const item = this.items[this.head];
+        this.items[this.head] = undefined;
+        this.head = (this.head + 1) % this.capacity;
+        this.count -= 1;
+        return item;
+      }
+
+      front() {
+        if (this.isEmpty()) {
+          return undefined;
+        }
+
+        return this.items[this.head];
+      }
+
+      size() {
+        return this.count;
+      }
+
+      isEmpty() {
+        return this.count === 0;
+      }
+
+      isFull() {
+        return this.count === this.capacity;
+      }
+    }
+
+    function runStackTests() {
+      console.log("Running Stack tests...");
+
+      const stack = new Stack();
+      console.assert(stack.isEmpty() === true, "New stack should be empty.");
+      console.assert(stack.size() === 0, "New stack should have size 0.");
+      console.assert(stack.peek() === undefined, "Peek on empty stack should return undefined.");
+      console.assert(stack.pop() === undefined, "Pop on empty stack should return undefined.");
+
+      stack.push(10);
+      stack.push(20);
+      stack.push(30);
+
+      console.assert(stack.size() === 3, "Stack size should be 3 after three pushes.");
+      console.assert(stack.peek() === 30, "Peek should return the top item.");
+      console.assert(stack.size() === 3, "Peek should not remove the top item.");
+      console.assert(stack.pop() === 30, "First pop should return the last pushed item.");
+      console.assert(stack.pop() === 20, "Second pop should return the next item in LIFO order.");
+      console.assert(stack.pop() === 10, "Third pop should return the oldest remaining item.");
+      console.assert(stack.pop() === undefined, "Pop on empty stack should still return undefined.");
+      console.assert(stack.isEmpty() === true, "Stack should be empty after popping all items.");
+    }
+
+    function runQueueTests() {
+      console.log("Running Queue tests...");
+
+      let invalidCapacityThrew = false;
+      try {
+        new Queue(0);
+      } catch (error) {
+        invalidCapacityThrew = error instanceof RangeError;
+      }
+      console.assert(invalidCapacityThrew === true, "Queue should throw RangeError for invalid capacity.");
+
+      const queue = new Queue(3);
+      console.assert(queue.isEmpty() === true, "New queue should be empty.");
+      console.assert(queue.isFull() === false, "New queue should not be full.");
+      console.assert(queue.size() === 0, "New queue should have size 0.");
+      console.assert(queue.front() === undefined, "Front on empty queue should return undefined.");
+      console.assert(queue.dequeue() === undefined, "Dequeue on empty queue should return undefined.");
+
+      console.assert(queue.enqueue("A") === true, "First enqueue should succeed.");
+      console.assert(queue.enqueue("B") === true, "Second enqueue should succeed.");
+      console.assert(queue.enqueue("C") === true, "Third enqueue should succeed.");
+      console.assert(queue.isFull() === true, "Queue should report full at capacity.");
+      console.assert(queue.front() === "A", "Front should return the first enqueued item.");
+      console.assert(queue.enqueue("D") === false, "Enqueue on full queue should return false.");
+
+      console.assert(queue.dequeue() === "A", "First dequeue should follow FIFO order.");
+      console.assert(queue.dequeue() === "B", "Second dequeue should follow FIFO order.");
+      console.assert(queue.isFull() === false, "Queue should not be full after dequeues.");
+
+      console.assert(queue.enqueue("D") === true, "Enqueue after dequeue should succeed.");
+      console.assert(queue.enqueue("E") === true, "Enqueue should wrap around to reused slots.");
+      console.assert(queue.isFull() === true, "Queue should be full again after wrap-around enqueues.");
+      console.assert(queue.front() === "C", "Front should still point to the oldest remaining item.");
+
+      console.assert(queue.dequeue() === "C", "Wrap-around dequeue should still return FIFO order.");
+      console.assert(queue.dequeue() === "D", "Queue should continue in FIFO order after wrapping.");
+      console.assert(queue.dequeue() === "E", "Final dequeue should return the last remaining item.");
+      console.assert(queue.dequeue() === undefined, "Dequeue on empty queue should return undefined again.");
+      console.assert(queue.front() === undefined, "Front on empty queue should return undefined again.");
+      console.assert(queue.isEmpty() === true, "Queue should be empty after removing all items.");
+    }
+
+    function createNaiveQueueDemo() {
+      const items = [];
+
+      return {
+        enqueue(item) {
+          items.push(item);
+        },
+        dequeue() {
+          return items.shift();
+        },
+        size() {
+          return items.length;
+        }
+      };
+    }
+
+    function benchmarkArrayOperations(n) {
+      const pushArray = [];
+      const unshiftArray = [];
+
+      console.log("Naive queue contrast: plain arrays often enqueue with push and dequeue with shift.");
+      const naiveQueue = createNaiveQueueDemo();
+      naiveQueue.enqueue("first");
+      naiveQueue.enqueue("second");
+      console.log("Naive queue demo dequeue results:", naiveQueue.dequeue(), naiveQueue.dequeue());
+
+      const pushStart = performance.now();
+      console.time("push");
+      for (let i = 0; i < n; i += 1) {
+        pushArray.push(i);
+      }
+      console.timeEnd("push");
+      const pushMs = performance.now() - pushStart;
+
+      const unshiftStart = performance.now();
+      console.time("unshift");
+      for (let i = 0; i < n; i += 1) {
+        unshiftArray.unshift(i);
+      }
+      console.timeEnd("unshift");
+      const unshiftMs = performance.now() - unshiftStart;
+
+      console.log("push is typically faster because appending to the end is usually O(1) amortized.");
+      console.log("unshift is typically slower for large arrays because existing elements are reindexed, making it O(n).");
+
+      return {
+        pushMs,
+        unshiftMs
+      };
+    }
+
+    function printSummary(times, n) {
+      console.log("Summary:");
+      console.log("Stack push, pop, peek, size, and isEmpty are expected to be O(1), with push/pop amortized for the array-backed stack.");
+      console.log("Ring buffer queue enqueue, dequeue, front, size, isEmpty, and isFull are expected to be O(1).");
+      console.log("The ring buffer avoids shift and unshift costs by moving head and tail with circular indexing instead of relocating existing elements.");
+      console.log("Benchmark size:", n);
+      console.log("Measured push time:", times.pushMs.toFixed(2) + " ms");
+      console.log("Measured unshift time:", times.unshiftMs.toFixed(2) + " ms");
+    }
+
+    runStackTests();
+    runQueueTests();
+
+    const benchmarkSize = 100000;
+    const benchmarkTimes = benchmarkArrayOperations(benchmarkSize);
+    printSummary(benchmarkTimes, benchmarkSize);
+  </script>
+</body>
+</html>

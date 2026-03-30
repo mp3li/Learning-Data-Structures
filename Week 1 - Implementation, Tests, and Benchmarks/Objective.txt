@@ -1,0 +1,45 @@
+3/30/2026
+
+Objective:
+
+Build a simple Stack (LIFO) and a Queue (FIFO) using a ring buffer in plain JavaScript, write a few minimal “unit-like” tests using console.assert, and benchmark Array.prototype.push versus Array.prototype.unshift with console.time / console.timeEnd to observe the difference between typical O(1) and O(n) operations.
+
+Instructions:
+
+1. Create a new file named index.html. Work only in this file. Use plain HTML and a single <script> tag for your JavaScript.
+
+2. Implement a Stack class with the following methods:
+        • push(item) — add to the top
+        • pop() — remove and return the top item
+        • peek() — return the top item without removing it
+        • size() — return the number of items
+        • isEmpty() — return true if empty, otherwise false
+   	• Use an internal array and only push/pop for core operations.
+
+3. Implement a Queue using a ring buffer:
+        • Constructor accepts a positive integer capacity.
+        • Maintain head, tail, count, and an internal array of fixed length capacity.
+        • enqueue(item) — add at tail and wrap with modulo arithmetic.
+        • dequeue() — remove from head and wrap with modulo arithmetic.
+        • front(), size(), isEmpty(), isFull().
+    	• Do not use shift or unshift in the queue; use the circular indexing logic.
+    
+4. Write minimal “unit-like” tests with console.assert that cover happy paths and a couple of edge cases:
+        • Stack: push multiple items, check size, peek, LIFO order with pop, and empty behavior.
+        • Queue: enqueue until full, verify isFull, then dequeue to verify FIFO order, wrap-around behavior, and empty behavior.
+    	• Include a few negative checks (for example, dequeueing from an empty queue returns undefined or a clear sentinel).
+    
+5. Create a small naïve queue demo using a plain array with push and shift to contrast with your ring buffer queue. Use it only for the benchmark in the next step.
+    
+6. Benchmark array push vs. unshift for a large n to visualize O(1) vs. O(n):
+        • Choose a large n (for example, 100000).
+        • Measure with console.time("push") and console.timeEnd("push") while pushing n items into an empty array.
+        • Measure with console.time("unshift") and console.timeEnd("unshift") while unshifting n items into an empty array.
+        • Log brief notes explaining why unshift is typically slower for large n.
+    
+7. In the end, print a short summary to the console describing:
+        • Which operations in your stack and queue are expected to be O(1).
+        • Why the ring buffer avoids the cost of shift and unshift.
+        • Your measured times for push vs. unshift on your machine.
+    
+8. Run the page in a browser, open DevTools, and verify that all console.assert checks pass and that benchmark timings are printed.
