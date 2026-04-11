@@ -1,0 +1,23 @@
+4/10/2026
+
+Objective:
+
+In this assignment, you will practice building and working with a Doubly Linked List. You will focus on understanding how nodes connect to each other using references instead of indexes. By the end of the activity, you should understand how adding a prev reference changes how a linked list works and why this structure is useful for certain problems.
+
+Instructions:
+
+1. Create a Node structure that stores a value, a reference to the next node, and a reference to the previous node.
+    
+2. Create a DoublyLinkedList class that keeps track of the head, tail, and length of the list.
+    
+3. Implement a method to add a value to the front of the list.
+    
+4. Implement a method to add a value to the end of the list.
+    
+5. Implement a method to remove a value from the front of the list.
+    
+6. Implement a method to remove a value from the end of the list.
+    
+7. Test your list by adding and removing values and printing the results.
+    
+8. Be prepared to explain how the next and prev references change as the list is modified.

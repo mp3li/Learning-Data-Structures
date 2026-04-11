@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 3 - Doubly Linked List</title>
+</head>
+<body>
+  <script>
+    class Node {
+      constructor(value) {
+        this.value = value;
+        this.next = null;
+        this.prev = null;
+      }
+    }
+
+    class DoublyLinkedList {
+      constructor() {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+      }
+
+      addFront(value) {
+        const node = new Node(value);
+
+        if (this.head === null) {
+          this.head = node;
+          this.tail = node;
+        } else {
+          node.next = this.head;
+          this.head.prev = node;
+          this.head = node;
+        }
+
+        this.length += 1;
+      }
+
+      addEnd(value) {
+        const node = new Node(value);
+
+        if (this.tail === null) {
+          this.head = node;
+          this.tail = node;
+        } else {
+          node.prev = this.tail;
+          this.tail.next = node;
+          this.tail = node;
+        }
+
+        this.length += 1;
+      }
+
+      removeFront() {
+        if (this.head === null) {
+          return undefined;
+        }
+
+        const removedNode = this.head;
+
+        if (this.length === 1) {
+          this.head = null;
+          this.tail = null;
+        } else {
+          this.head = removedNode.next;
+          this.head.prev = null;
+          removedNode.next = null;
+        }
+
+        this.length -= 1;
+        return removedNode.value;
+      }
+
+      removeEnd() {
+        if (this.tail === null) {
+          return undefined;
+        }
+
+        const removedNode = this.tail;
+
+        if (this.length === 1) {
+          this.head = null;
+          this.tail = null;
+        } else {
+          this.tail = removedNode.prev;
+          this.tail.next = null;
+          removedNode.prev = null;
+        }
+
+        this.length -= 1;
+        return removedNode.value;
+      }
+    }
+
+    function listValues(list) {
+      const values = [];
+      let current = list.head;
+
+      while (current !== null) {
+        values.push(current.value);
+        current = current.next;
+      }
+
+      return values;
+    }
+
+    function describeEnds(list) {
+      const headValue = list.head ? list.head.value : null;
+      const tailValue = list.tail ? list.tail.value : null;
+      const headPrev = list.head && list.head.prev ? list.head.prev.value : null;
+      const tailNext = list.tail && list.tail.next ? list.tail.next.value : null;
+
+      console.log("List values:", listValues(list));
+      console.log("Head:", headValue, "| head.prev:", headPrev);
+      console.log("Tail:", tailValue, "| tail.next:", tailNext);
+      console.log("Length:", list.length);
+    }
+
+    const list = new DoublyLinkedList();
+
+    console.log("Add 20 to the front.");
+    list.addFront(20);
+    describeEnds(list);
+    console.log("The new node becomes both head and tail, so both next and prev stay null.");
+
+    console.log("Add 10 to the front.");
+    list.addFront(10);
+    describeEnds(list);
+    console.log("The new head points next to 20, and 20 now points prev back to 10.");
+
+    console.log("Add 30 to the end.");
+    list.addEnd(30);
+    describeEnds(list);
+    console.log("The new tail points prev to 20, and 20 now points next to 30.");
+
+    console.log("Remove from the front:", list.removeFront());
+    describeEnds(list);
+    console.log("The old head is removed, so 20 becomes the new head and its prev is reset to null.");
+
+    console.log("Remove from the end:", list.removeEnd());
+    describeEnds(list);
+    console.log("The old tail is removed, so 20 remains and its next is reset to null.");
+  </script>
+</body>
+</html>
