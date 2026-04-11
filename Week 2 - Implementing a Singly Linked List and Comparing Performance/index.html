@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 2 - Singly Linked List</title>
+</head>
+<body>
+  <script>
+    class Node {
+      constructor(value) {
+        this.value = value;
+        this.next = null;
+      }
+    }
+
+    class SinglyLinkedList {
+      constructor() {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+      }
+
+      prepend(value) {
+        const node = new Node(value);
+
+        if (this.head === null) {
+          this.head = node;
+          this.tail = node;
+        } else {
+          node.next = this.head;
+          this.head = node;
+        }
+
+        this.length += 1;
+      }
+
+      append(value) {
+        const node = new Node(value);
+
+        if (this.tail === null) {
+          this.head = node;
+          this.tail = node;
+        } else {
+          this.tail.next = node;
+          this.tail = node;
+        }
+
+        this.length += 1;
+      }
+
+      insertAt(index, value) {
+        if (!Number.isInteger(index) || index < 0 || index > this.length) {
+          throw new RangeError("Index out of bounds.");
+        }
+
+        if (index === 0) {
+          this.prepend(value);
+          return;
+        }
+
+        if (index === this.length) {
+          this.append(value);
+          return;
+        }
+
+        let previous = this.head;
+
+        for (let position = 0; position < index - 1; position += 1) {
+          previous = previous.next;
+        }
+
+        const node = new Node(value);
+        node.next = previous.next;
+        previous.next = node;
+        this.length += 1;
+      }
+
+      removeAt(index) {
+        if (!Number.isInteger(index) || index < 0 || index >= this.length) {
+          throw new RangeError("Index out of bounds.");
+        }
+
+        let removedNode;
+
+        if (index === 0) {
+          removedNode = this.head;
+          this.head = this.head.next;
+
+          if (this.length === 1) {
+            this.tail = null;
+          }
+
+          this.length -= 1;
+          return removedNode.value;
+        }
+
+        let previous = this.head;
+
+        for (let position = 0; position < index - 1; position += 1) {
+          previous = previous.next;
+        }
+
+        removedNode = previous.next;
+        previous.next = removedNode.next;
+
+        if (removedNode === this.tail) {
+          this.tail = previous;
+        }
+
+        this.length -= 1;
+        return removedNode.value;
+      }
+
+      find(valueOrPredicate) {
+        const isPredicate = typeof valueOrPredicate === "function";
+        let current = this.head;
+
+        while (current !== null) {
+          const matched = isPredicate
+            ? valueOrPredicate(current.value)
+            : current.value === valueOrPredicate;
+
+          if (matched) {
+            return current;
+          }
+
+          current = current.next;
+        }
+
+        return null;
+      }
+    }
+
+    function measureLinkedListFrontInsert(count) {
+      const list = new SinglyLinkedList();
+      const start = performance.now();
+
+      for (let i = 0; i < count; i += 1) {
+        list.prepend(i);
+      }
+
+      return performance.now() - start;
+    }
+
+    function measureLinkedListFrontDelete(count) {
+      const list = new SinglyLinkedList();
+
+      for (let i = 0; i < count; i += 1) {
+        list.prepend(i);
+      }
+
+      const start = performance.now();
+
+      for (let i = 0; i < count; i += 1) {
+        list.removeAt(0);
+      }
+
+      return performance.now() - start;
+    }
+
+    function measureArrayFrontInsert(count) {
+      const items = [];
+      const start = performance.now();
+
+      for (let i = 0; i < count; i += 1) {
+        items.unshift(i);
+      }
+
+      return performance.now() - start;
+    }
+
+    function measureArrayFrontDelete(count) {
+      const items = [];
+
+      for (let i = 0; i < count; i += 1) {
+        items.unshift(i);
+      }
+
+      const start = performance.now();
+
+      for (let i = 0; i < count; i += 1) {
+        items.shift();
+      }
+
+      return performance.now() - start;
+    }
+
+    function writeReflection(results) {
+      const fasterInsert =
+        results.linkedListInsertMs < results.arrayInsertMs ? "linked list" : "array";
+      const fasterDelete =
+        results.linkedListDeleteMs < results.arrayDeleteMs ? "linked list" : "array";
+
+      console.log("Reflection:");
+      console.log(
+        "For front insertion, the " +
+          fasterInsert +
+          " was faster in this run. The linked list can add a new head node without shifting existing elements, while an array usually has to move items when using unshift."
+      );
+      console.log(
+        "For front deletion, the " +
+          fasterDelete +
+          " was faster in this run. A linked list can remove the head by changing one reference, while an array usually has to reindex remaining elements after shift."
+      );
+      console.log(
+        "This shows the trade-off clearly: linked lists are stronger for front insertions and deletions, while arrays keep elements in contiguous memory and are often preferred when direct indexing is more important."
+      );
+    }
+
+    const benchmarkSize = 50000;
+    const results = {
+      linkedListInsertMs: measureLinkedListFrontInsert(benchmarkSize),
+      linkedListDeleteMs: measureLinkedListFrontDelete(benchmarkSize),
+      arrayInsertMs: measureArrayFrontInsert(benchmarkSize),
+      arrayDeleteMs: measureArrayFrontDelete(benchmarkSize)
+    };
+
+    console.log("Benchmark size:", benchmarkSize);
+    console.log("Linked list front insert:", results.linkedListInsertMs.toFixed(2) + " ms");
+    console.log("Linked list front delete:", results.linkedListDeleteMs.toFixed(2) + " ms");
+    console.log("Array front insert:", results.arrayInsertMs.toFixed(2) + " ms");
+    console.log("Array front delete:", results.arrayDeleteMs.toFixed(2) + " ms");
+
+    writeReflection(results);
+  </script>
+</body>
+</html>

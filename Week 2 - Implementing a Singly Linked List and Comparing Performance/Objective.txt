@@ -1,0 +1,22 @@
+4/10/2026
+
+Objective:
+
+In this assignment, you will build a beginner-friendly implementation of a Singly Linked List and practice common list operations. You will also compare the performance of linked lists and arrays when inserting and deleting elements at the front, and reflect on the trade-offs between these data structures.
+
+Instructions:
+
+1. Create a SinglyLinkedList class and a supporting Node structure.
+
+2. Implement the following methods in your SinglyLinkedList:
+        • prepend(value) – add a value to the front of the list
+        • append(value) – add a value to the end of the list
+        • insertAt(index, value) – insert a value at a specific position
+        • removeAt(index) – remove a value at a specific position
+        • find(predicate or value) – locate a node in the list
+    
+3. Using JavaScript, measure the time it takes to insert and delete elements at the front of a Singly Linked List.
+    
+4. Measure the same front insert and delete operations using a JavaScript array.
+    
+5. Write a short reflection comparing the results. Describe which structure performed faster, why the difference exists, and what you observed about linked lists versus arrays.
