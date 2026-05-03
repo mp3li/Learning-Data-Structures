@@ -1,0 +1,52 @@
+5/3/2026
+
+Objective:
+
+The goal of this lab is to help you understand how hash tables work internally. You will build a simple HashTable from scratch using separate chaining, then compare its performance with JavaScript’s built-in Map.
+
+By the end of this lab, you should be able to explain how hash functions, buckets, collisions, and resizing affect performance.
+
+Instructions:
+
+Part 1: Implement a Custom HashTable
+
+1. Create a HashTable class that uses an array of buckets. Each bucket should store multiple key-value pairs using a list-like structure (for this lab, you may use arrays to represent linked lists).
+    
+2. Implement the following methods:
+        • set(key, value) – add or update a key-value pair
+        • get(key) – return the value for a key, or null if not found
+        • has(key) – return true if the key exists
+        • delete(key) – remove a key-value pair
+    
+3. Use a hash function that converts a key into an array index. The same key must always produce the same index.
+    
+4. Handle collisions using separate chaining, meaning multiple key-value pairs may exist in the same bucket.
+
+Part 2: Automatic Resizing
+
+1. Track how many entries are stored in your hash table.
+    
+2. Calculate the load factor (number of entries divided by number of buckets).
+    
+3. When the load factor becomes too high, resize the table by:
+        • Creating a new array with more buckets
+        • Rehashing and reinserting all existing entries
+
+Part 3: Benchmark Against Map
+
+1. Create test data with different key distributions:
+        • Sequential numeric keys
+        • Random string keys
+    
+2. Measure how long it takes to perform many set and get operations using:
+        • Your custom HashTable
+        • JavaScript’s Map
+    
+3. Record basic throughput results (operations per second).
+
+Part 4: Observe Memory Usage
+
+1. Compare how much extra space your hash table uses compared to Map.
+    
+2. Write short notes on why hash tables trade memory for speed.
+
