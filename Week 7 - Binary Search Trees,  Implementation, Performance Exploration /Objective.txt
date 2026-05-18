@@ -1,0 +1,44 @@
+5/17/2026
+
+Objective:
+
+By the end of this lab, you will be able to:
+
+    • Implement a Binary Search Tree (BST) from scratch.
+    • Perform core BST operations: insert, contains, and remove.
+    • Traverse a BST using in-order, pre-order, and post-order traversals.
+    • Observe how insertion order (sorted vs. random data) affects tree height and performance.
+    • Measure and compare operation times to understand best-case vs. worst-case behavior of BSTs.
+
+Instructions:
+
+1. Create a BST Implementation
+        • Define a Node structure with a value, left child, and right child.
+        • Implement a BinarySearchTree class with the following methods:
+            • insert(value)
+            • contains(value)
+            • remove(value)
+            • inOrderTraversal()
+            • preOrderTraversal()
+            • postOrderTraversal()
+
+2. Test Basic Functionality
+        • Insert multiple values into your BST.
+        • Verify that contains correctly identifies whether values are in the tree.
+        • Test remove for:
+            • A leaf node
+            • A node with one child
+            • A node with two children
+        • Print or return the results of each traversal to confirm correctness.
+
+3. Experiment: Insertion Order
+        • Create two separate BSTs:
+            • One by inserting values in sorted order
+            • One by inserting the same values in random order
+        • For each tree:
+            • Measure the height of the tree.
+            • Measure the time taken for search (and/or insert) operations.
+
+4. Analyze Results
+        • Compare the height and operation times between the two trees.
+        • Briefly explain why the results are different based on BST behavior.
