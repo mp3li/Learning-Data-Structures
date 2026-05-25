@@ -1,0 +1,59 @@
+5/24/2026
+
+Objective:
+
+    • Implement a Binary Heap (Min Heap or Max Heap) using an array in Node.js
+    • Implement push, pop, and peek operations
+    • Create a Priority Queue using your Binary Heap
+    • Compare performance against a naive sorted array approach
+    • Understand how data structures impact scheduling efficiency
+
+Instructions:
+
+Step 1: Setup
+
+    • Create a new Node.js project folder or use existing one
+    • Create a file named heapLab.js
+
+Step 2: Implement Binary Heap
+
+    • Create a class named BinaryHeap
+    • Use an array to store the heap
+    • Implement the following methods:
+        • push(value) - insert a value and maintain heap property
+        • pop() - remove the root and maintain heap property
+        • peek() - return the root value
+    • Use index formulas:
+        • Parent: (i - 1) / 2
+        • Left child: 2i + 1
+        • Right child: 2i + 2
+
+Step 3: Create Priority Queue
+
+    • Create a class named PriorityQueue
+    • Use your BinaryHeap inside this class
+    • Implement:
+        • enqueue(value)
+        • dequeue()
+        • peek()
+
+Step 4: Implement Naive Sorted Array
+
+    • Create a class named SortedArrayQueue
+    • Insert elements and sort the array after each insert
+    • Remove elements from the front of the array
+
+Step 5: Compare Performance
+
+    • Write a test function to:
+        • Insert many random values (example: 1000, 5000, 10000)
+        • Remove all values
+    • Use console.time() and console.timeEnd() to measure performance
+    • Compare results between:
+        • Heap-based Priority Queue
+        • Sorted Array Queue
+
+Step 6: Run Program
+
+    • Run your code using: node heapLab.js
+    • Observe and compare execution times
