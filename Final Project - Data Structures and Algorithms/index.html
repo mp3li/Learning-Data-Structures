@@ -10,21 +10,34 @@
   <main class="app-shell">
     <header class="hero">
       <div>
-        <p class="eyebrow">Organize your camping gear from garage shelf to trail pack</p>
+        <p class="eyebrow">Organize your camping gear from storage shelf to trail pack</p>
         <h1>Camping Gear Inventory And Packing Planner by mp3li</h1>
         <p class="hero-copy">Track real camping gear by brand, season, shelf, rack, bin, weight, and priority while comparing array search with hash-table lookup.</p>
       </div>
-      <div class="hero-stats" aria-label="Inventory summary">
-        <div><strong id="totalItems">0</strong><span>gear items</span></div>
-        <div><strong>4</strong><span>data structures</span></div>
-        <div><strong>75</strong><span>seed records</span></div>
+      <div class="hero-side">
+        <div class="compass" id="compass" aria-label="Interactive compass that points toward your cursor">
+          <div class="compass-ring">
+            <span class="direction north">N</span>
+            <span class="direction east">E</span>
+            <span class="direction south">S</span>
+            <span class="direction west">W</span>
+            <div class="compass-needle"></div>
+            <div class="compass-pin"></div>
+          </div>
+          <p>Where will you go next?</p>
+        </div>
+        <div class="hero-stats" aria-label="Inventory summary">
+          <div><strong id="totalItems">0</strong><span>gear items</span></div>
+          <div><strong>4</strong><span>data structures</span></div>
+          <div><strong>75</strong><span>seed records</span></div>
+        </div>
       </div>
     </header>
 
     <section class="panel controls-panel" aria-labelledby="controlsTitle">
       <div class="section-heading">
         <h2 id="controlsTitle">Inventory Controls</h2>
-        <p>Search, filter, add, delete, and benchmark the garage inventory.</p>
+        <p>Search, filter, rename, add, delete, and benchmark the storage inventory.</p>
       </div>
       <div class="control-grid">
         <label>
@@ -48,6 +61,10 @@
           <select id="sizeFilter">
             <option value="all">All sizes</option>
           </select>
+        </label>
+        <label>
+          Storage location name
+          <input id="locationNameInput" type="text" value="Garage">
         </label>
       </div>
       <div class="button-row">
@@ -87,8 +104,8 @@
     <section class="dashboard-grid lower-grid">
       <article class="panel" aria-labelledby="storageTitle">
         <div class="section-heading">
-          <h2 id="storageTitle">Garage Storage Tree</h2>
-          <p>Garage -> shelf -> rack -> bin or loose -> item.</p>
+          <h2 id="storageTitle"><span id="storageLocationLabel">Garage</span> Storage Tree</h2>
+          <p>Location -> shelf -> rack -> bin or loose -> item.</p>
         </div>
         <div id="storageTree" class="storage-tree"></div>
       </article>

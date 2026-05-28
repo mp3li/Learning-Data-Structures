@@ -30,7 +30,7 @@ The main background image is `assets/images/muhammad-masood-4bGPldCL4I8-unsplash
 - The top hero introduces the project and shows summary stats.
 - The controls panel is placed before the main work areas.
 - Inventory and packing list sit side by side on desktop.
-- Garage tree and add-item form sit below the primary workflow.
+- Storage tree and add-item form sit below the primary workflow.
 - The layout collapses to one column on smaller screens.
 
 ## Accessibility And Readability

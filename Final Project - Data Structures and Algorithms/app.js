@@ -217,6 +217,9 @@ class TreeNode {
 
 const packingList = new PackingLinkedList();
 let gearTable = new GearHashTable();
+let activePreset = null;
+let packingBeforePreset = [];
+let storageLocationName = "Garage";
 
 const presets = {
   "Summer Camping": ["3-season", "summer", "all-season"],
@@ -261,7 +264,10 @@ const els = {
   warningList: document.getElementById("warningList"),
   exportOutput: document.getElementById("exportOutput"),
   benchmarkResult: document.getElementById("benchmarkResult"),
-  addGearForm: document.getElementById("addGearForm")
+  addGearForm: document.getElementById("addGearForm"),
+  compass: document.getElementById("compass"),
+  locationNameInput: document.getElementById("locationNameInput"),
+  storageLocationLabel: document.getElementById("storageLocationLabel")
 };
 
 function keyFor(item) {
@@ -274,7 +280,7 @@ function displayKey(item) {
 
 function locationPath(item) {
   const container = item.storageType === "loose" ? "Loose" : item.container;
-  return `Garage -> ${item.shelf} -> ${item.rack} -> ${container}`;
+  return `${storageLocationName} -> ${item.shelf} -> ${item.rack} -> ${container}`;
 }
 
 function rebuildHashTable() {
@@ -283,7 +289,7 @@ function rebuildHashTable() {
 }
 
 function buildStorageTree(items) {
-  const root = new TreeNode("Garage", "garage");
+  const root = new TreeNode(storageLocationName, "location");
   SHELVES.forEach((category) => {
     const shelfNode = root.child(`${category} Shelf`, "shelf");
     RACKS.forEach((rack) => shelfNode.child(rack, "rack"));
@@ -363,7 +369,10 @@ function renderStorage() {
 
 function renderPresets() {
   els.presetButtons.innerHTML = Object.keys(presets)
-    .map((name) => `<button type="button" data-preset="${name}">${name}</button>`)
+    .map((name) => {
+      const isActive = activePreset === name;
+      return `<button type="button" class="${isActive ? "selected" : ""}" data-preset="${name}" aria-pressed="${isActive}">${name}</button>`;
+    })
     .join("");
 }
 
@@ -408,8 +417,11 @@ function renderWarnings(items) {
 function packItem(id) {
   const item = gearItems.find((entry) => entry.id === id);
   if (item) {
+    activePreset = null;
+    packingBeforePreset = [];
     item.packed = true;
     packingList.append(item);
+    renderPresets();
     renderPacking();
   }
 }
@@ -423,6 +435,24 @@ function deleteItem(id) {
 }
 
 function applyPreset(name) {
+  if (activePreset === name) {
+    packingList.clear();
+    packingBeforePreset
+      .map((id) => gearItems.find((item) => item.id === id))
+      .filter(Boolean)
+      .forEach((item) => packingList.append(item));
+    activePreset = null;
+    packingBeforePreset = [];
+    renderPresets();
+    renderPacking();
+    return;
+  }
+
+  if (!activePreset) {
+    packingBeforePreset = packingList.toArray().map((item) => item.id);
+  }
+
+  activePreset = name;
   const seasons = presets[name];
   const rules = presetRules[name];
   packingList.clear();
@@ -450,6 +480,7 @@ function applyPreset(name) {
   }
 
   candidates.slice(0, 12).forEach((item) => packingList.append(item));
+  renderPresets();
   renderPacking();
 }
 
@@ -528,6 +559,14 @@ function bindEvents() {
     control.addEventListener("input", renderInventory);
   });
 
+  els.locationNameInput.addEventListener("input", () => {
+    storageLocationName = els.locationNameInput.value.trim() || "Garage";
+    els.storageLocationLabel.textContent = storageLocationName;
+    renderInventory();
+    renderStorage();
+    renderPacking();
+  });
+
   els.inventoryList.addEventListener("click", (event) => {
     const packId = event.target.dataset.pack;
     const deleteId = event.target.dataset.delete;
@@ -541,11 +580,36 @@ function bindEvents() {
 
   document.getElementById("runBenchmark").addEventListener("click", runBenchmark);
   document.getElementById("clearPacking").addEventListener("click", () => {
+    activePreset = null;
+    packingBeforePreset = [];
     packingList.clear();
+    renderPresets();
     renderPacking();
   });
   document.getElementById("exportPacking").addEventListener("click", exportChecklist);
   els.addGearForm.addEventListener("submit", addGear);
+  bindCompass();
+}
+
+function bindCompass() {
+  if (!els.compass) return;
+  let currentAngle = -28;
+
+  const pointCompass = (event) => {
+    const rect = els.compass.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const targetAngle = Math.atan2(event.clientY - centerY, event.clientX - centerX) * 180 / Math.PI + 90;
+    const shortestTurn = ((targetAngle - currentAngle + 540) % 360) - 180;
+    currentAngle += shortestTurn;
+    els.compass.style.setProperty("--needle-angle", `${currentAngle}deg`);
+  };
+
+  window.addEventListener("pointermove", pointCompass);
+  window.addEventListener("pointerleave", () => {
+    currentAngle = -28;
+    els.compass.style.setProperty("--needle-angle", "-28deg");
+  });
 }
 
 function renderAll() {

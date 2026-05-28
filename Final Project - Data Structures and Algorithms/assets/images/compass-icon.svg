@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Compass icon</title>
+  <desc id="desc">A dark camping compass icon using the project orange, brown, and forest green colors.</desc>
+  <defs>
+    <radialGradient id="face" cx="50%" cy="48%" r="62%">
+      <stop offset="0%" stop-color="#151e08"/>
+      <stop offset="62%" stop-color="#0b1406"/>
+      <stop offset="100%" stop-color="#04040c"/>
+    </radialGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <circle cx="80" cy="80" r="73" fill="#04040c" stroke="#66310c" stroke-width="6"/>
+  <circle cx="80" cy="80" r="60" fill="url(#face)" stroke="#aa5215" stroke-width="3"/>
+  <circle cx="80" cy="80" r="49" fill="none" stroke="#f7efe6" stroke-opacity="0.22" stroke-width="2" stroke-dasharray="4 6"/>
+  <path d="M80 20v120M20 80h120" stroke="#f7efe6" stroke-opacity="0.24" stroke-width="4"/>
+  <path d="M80 80 121 37 94 94z" fill="#f7efe6" filter="url(#glow)"/>
+  <path d="M80 80 39 123 66 66z" fill="#aa5215" filter="url(#glow)"/>
+  <circle cx="80" cy="80" r="15" fill="#66310c" stroke="#f7efe6" stroke-width="4"/>
+  <text x="80" y="33" text-anchor="middle" font-family="monospace" font-size="20" fill="#ffb579">N</text>
+  <text x="80" y="136" text-anchor="middle" font-family="monospace" font-size="20" fill="#ffb579">S</text>
+  <text x="131" y="87" text-anchor="middle" font-family="monospace" font-size="20" fill="#ffb579">E</text>
+  <text x="29" y="87" text-anchor="middle" font-family="monospace" font-size="20" fill="#ffb579">W</text>
+</svg>

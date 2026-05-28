@@ -33,7 +33,7 @@ Example:
 | `id` | A unique identifier. Do not reuse the same id for two items. |
 | `brand` | The company or maker, such as Jetboil, MSR, REI, or Coleman. |
 | `name` | The item name, such as Propane Portable Stove. |
-| `category` | The garage shelf group. |
+| `category` | The storage shelf group. |
 | `season` | When the item is useful. |
 | `size` | Physical size of the item. |
 | `bulk` | How much space the item takes, from 1 to 10. |

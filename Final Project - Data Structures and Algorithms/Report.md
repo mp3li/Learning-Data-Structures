@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Camping Gear Inventory And Packing Planner by mp3li** is a standalone browser application that manages camping gear stored in a garage. The app tracks brand, item name, category, season, size, bulk, weight, priority, shelf, rack, container, and packed status. It demonstrates multiple data structures and compares different implementations for searching gear.
+**Camping Gear Inventory And Packing Planner by mp3li** is a standalone browser application that manages camping gear stored in a named storage location. The app tracks brand, item name, category, season, size, bulk, weight, priority, shelf, rack, container, and packed status. It demonstrates multiple data structures and compares different implementations for searching gear.
 
 ## Data Structures Used
 
@@ -38,17 +38,17 @@ Main use:
 
 ### Tree
 
-The garage storage system is represented as a tree:
+The storage system is represented as a tree:
 
 ```text
-Garage -> Shelf -> Rack -> Bin or Loose -> Gear Item
+Location -> Shelf -> Rack -> Bin or Loose -> Gear Item
 ```
 
 Main use:
 
 - Represent storage hierarchy.
 - Show how items are physically organized.
-- Traverse the garage layout visually.
+- Traverse the storage layout visually.
 
 ## Operations Demonstrated
 
@@ -57,7 +57,7 @@ Main use:
 | Insertion | Add Gear Item form inserts into the array catalog, hash table, and storage tree render. |
 | Deletion | Delete button removes a gear item from the catalog and hash table. |
 | Searching | Search box, filters, and hash-table benchmark. |
-| Traversal | Inventory render, packing-list render, exported checklist, and garage storage tree. |
+| Traversal | Inventory render, packing-list render, exported checklist, and storage tree. |
 
 ## Implementation Comparison
 
@@ -90,7 +90,7 @@ The array search is O(n) because it may need to inspect every item. The hash tab
 | Linked list | Search duplicate item | O(n) | O(n) |
 | Linked list | Traverse packing list | O(n) | O(n) |
 | Tree | Insert known path | O(depth) | O(n) |
-| Tree | Traverse garage layout | O(n) | O(n) |
+| Tree | Traverse storage layout | O(n) | O(n) |
 | Tree | Search without index | O(n) | O(n) |
 
 ## Learning Outcomes Mapping
@@ -102,4 +102,4 @@ The array search is O(n) because it may need to inspect every item. The hash tab
 
 ## Conclusion
 
-This project uses a realistic camping gear inventory to demonstrate how data structures affect storage, lookup, traversal, and performance. The hash table is best for fast item lookup, the array is simple for rendering and comparison, the linked list models the packing checklist, and the tree clearly represents the garage storage hierarchy.
+This project uses a realistic camping gear inventory to demonstrate how data structures affect storage, lookup, traversal, and performance. The hash table is best for fast item lookup, the array is simple for rendering and comparison, the linked list models the packing checklist, and the tree clearly represents the storage hierarchy.

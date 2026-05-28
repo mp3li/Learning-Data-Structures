@@ -50,15 +50,39 @@ button {
   color: var(--text);
   background: linear-gradient(135deg, var(--camp-orange), var(--bark-brown));
   cursor: pointer;
+  box-shadow: 0 0 0 rgba(170, 82, 21, 0), 0 8px 20px rgba(0, 0, 0, 0.22);
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, filter 140ms ease, background 140ms ease;
 }
 
 button:hover {
-  filter: brightness(1.12);
+  border-color: rgba(255, 181, 121, 0.72);
+  box-shadow: 0 0 0 3px rgba(170, 82, 21, 0.22), 0 14px 28px rgba(0, 0, 0, 0.34);
+  filter: brightness(1.22);
+  transform: translateY(-2px);
+}
+
+button:active {
+  box-shadow: 0 0 0 2px rgba(255, 181, 121, 0.28), 0 6px 14px rgba(0, 0, 0, 0.38);
+  filter: brightness(0.92);
+  transform: translateY(1px) scale(0.98);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(255, 181, 121, 0.72);
+  outline-offset: 3px;
 }
 
 button.secondary,
 .gear-card button {
   background: rgba(21, 30, 8, 0.8);
+}
+
+button.secondary:hover,
+.gear-card button:hover {
+  background: rgba(170, 82, 21, 0.78);
 }
 
 input,
@@ -70,6 +94,21 @@ textarea {
   padding: 0.68rem;
   color: var(--text);
   background: rgba(4, 4, 12, 0.74);
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: rgba(255, 181, 121, 0.5);
+  background: rgba(11, 20, 6, 0.84);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(255, 181, 121, 0.82);
+  box-shadow: 0 0 0 3px rgba(170, 82, 21, 0.22);
 }
 
 textarea {
@@ -101,9 +140,9 @@ label {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(270px, 360px);
   gap: 24px;
-  align-items: end;
+  align-items: center;
   min-height: 360px;
   padding: clamp(24px, 5vw, 56px);
   background:
@@ -142,6 +181,140 @@ h2 {
   color: var(--muted);
   font-size: 1.08rem;
   line-height: 1.55;
+}
+
+.hero-side {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.compass {
+  --needle-angle: -28deg;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: min(100%, 290px);
+  padding: 18px 16px 14px;
+  border: 1px solid rgba(255, 181, 121, 0.28);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(170, 82, 21, 0.18), transparent 42%),
+    rgba(4, 4, 12, 0.5);
+  box-shadow: inset 0 0 34px rgba(170, 82, 21, 0.12), 0 16px 42px rgba(0, 0, 0, 0.3);
+}
+
+.compass p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.compass-ring {
+  position: relative;
+  width: clamp(160px, 18vw, 220px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 181, 121, 0.56);
+  background:
+    linear-gradient(0deg, transparent 48%, rgba(255, 181, 121, 0.22) 49%, rgba(255, 181, 121, 0.22) 51%, transparent 52%),
+    linear-gradient(90deg, transparent 48%, rgba(255, 181, 121, 0.22) 49%, rgba(255, 181, 121, 0.22) 51%, transparent 52%),
+    radial-gradient(circle, rgba(11, 20, 6, 0.9) 0 48%, rgba(102, 49, 12, 0.68) 49% 52%, rgba(4, 4, 12, 0.72) 53%);
+}
+
+.compass-ring::before,
+.compass-ring::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px dashed rgba(247, 239, 230, 0.22);
+}
+
+.compass-ring::after {
+  inset: 24px;
+  border-style: solid;
+  border-color: rgba(170, 82, 21, 0.34);
+}
+
+.direction {
+  position: absolute;
+  z-index: 2;
+  color: #ffb579;
+  font-family: "Digital Dream Fat Narrow", Impact, sans-serif;
+  line-height: 1.15;
+}
+
+.north {
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.east {
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.south {
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.west {
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.compass-needle {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 42%;
+  transform: translate(-50%, -100%) rotate(var(--needle-angle));
+  transform-origin: 50% 100%;
+  transition: transform 90ms linear;
+  filter: drop-shadow(0 0 10px rgba(170, 82, 21, 0.55));
+}
+
+.compass-needle::before,
+.compass-needle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+}
+
+.compass-needle::before {
+  top: 0;
+  border-bottom: 82px solid var(--camp-orange);
+}
+
+.compass-needle::after {
+  bottom: -58px;
+  border-top: 58px solid rgba(247, 239, 230, 0.74);
+}
+
+.compass-pin {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(247, 239, 230, 0.78);
+  border-radius: 50%;
+  background: var(--bark-brown);
+  box-shadow: 0 0 0 7px rgba(4, 4, 12, 0.72);
 }
 
 .hero-stats,
@@ -246,6 +419,14 @@ h2 {
   border-radius: 8px;
   padding: 14px;
   background: linear-gradient(145deg, rgba(21, 30, 8, 0.88), rgba(4, 4, 12, 0.8));
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.gear-card:hover {
+  border-color: rgba(255, 181, 121, 0.48);
+  background: linear-gradient(145deg, rgba(21, 30, 8, 0.96), rgba(102, 49, 12, 0.46));
+  box-shadow: 0 0 0 2px rgba(170, 82, 21, 0.12), 0 14px 28px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
 }
 
 .gear-card h3 {
@@ -284,6 +465,24 @@ h2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-bottom: 12px;
+}
+
+.preset-grid button.selected,
+.preset-grid button[aria-pressed="true"] {
+  border-color: rgba(255, 181, 121, 0.92);
+  color: #fff8ef;
+  background:
+    linear-gradient(135deg, rgba(170, 82, 21, 0.96), rgba(102, 49, 12, 0.92)),
+    var(--camp-orange);
+  box-shadow: 0 0 0 3px rgba(170, 82, 21, 0.32), 0 14px 28px rgba(0, 0, 0, 0.36);
+  transform: translateY(-1px);
+}
+
+.preset-grid button.selected:hover,
+.preset-grid button[aria-pressed="true"]:hover {
+  border-color: rgba(255, 221, 189, 0.98);
+  box-shadow: 0 0 0 4px rgba(255, 181, 121, 0.28), 0 16px 32px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.16);
 }
 
 .warning-list {
@@ -348,6 +547,14 @@ h2 {
   .dashboard-grid,
   .lower-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-side {
+    justify-items: stretch;
+  }
+
+  .compass {
+    justify-self: center;
   }
 
   .hero-stats,
