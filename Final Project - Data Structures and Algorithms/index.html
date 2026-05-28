@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camping Gear Inventory And Packing Planner by mp3li</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Organize your camping gear from garage shelf to trail pack</p>
+        <h1>Camping Gear Inventory And Packing Planner by mp3li</h1>
+        <p class="hero-copy">Track real camping gear by brand, season, shelf, rack, bin, weight, and priority while comparing array search with hash-table lookup.</p>
+      </div>
+      <div class="hero-stats" aria-label="Inventory summary">
+        <div><strong id="totalItems">0</strong><span>gear items</span></div>
+        <div><strong>4</strong><span>data structures</span></div>
+        <div><strong>75</strong><span>seed records</span></div>
+      </div>
+    </header>
+
+    <section class="panel controls-panel" aria-labelledby="controlsTitle">
+      <div class="section-heading">
+        <h2 id="controlsTitle">Inventory Controls</h2>
+        <p>Search, filter, add, delete, and benchmark the garage inventory.</p>
+      </div>
+      <div class="control-grid">
+        <label>
+          Search brand or item
+          <input id="searchInput" type="search" placeholder="Jetboil Propane Portable Stove">
+        </label>
+        <label>
+          Shelf
+          <select id="shelfFilter">
+            <option value="all">All shelves</option>
+          </select>
+        </label>
+        <label>
+          Season
+          <select id="seasonFilter">
+            <option value="all">All seasons</option>
+          </select>
+        </label>
+        <label>
+          Size
+          <select id="sizeFilter">
+            <option value="all">All sizes</option>
+          </select>
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="runBenchmark" type="button">Run array vs hash table search</button>
+        <button id="clearPacking" type="button" class="secondary">Clear packing list</button>
+      </div>
+      <div id="benchmarkResult" class="result-box">Benchmark results will appear here.</div>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="panel" aria-labelledby="inventoryTitle">
+        <div class="section-heading">
+          <h2 id="inventoryTitle">Gear Inventory</h2>
+          <p id="inventoryCount">0 items shown</p>
+        </div>
+        <div id="inventoryList" class="inventory-list"></div>
+      </article>
+
+      <article class="panel" aria-labelledby="packingTitle">
+        <div class="section-heading">
+          <h2 id="packingTitle">Trip Packing List</h2>
+          <p>Linked list with retrieval paths.</p>
+        </div>
+        <div class="preset-grid" id="presetButtons"></div>
+        <div class="packing-summary">
+          <div><strong id="packedCount">0</strong><span>items</span></div>
+          <div><strong id="packedWeight">0 lb</strong><span>weight</span></div>
+          <div><strong id="packedBulk">0</strong><span>bulk score</span></div>
+        </div>
+        <div id="warningList" class="warning-list"></div>
+        <ol id="packingList" class="packing-list"></ol>
+        <button id="exportPacking" type="button">Export packing checklist</button>
+        <textarea id="exportOutput" readonly placeholder="Exported checklist appears here."></textarea>
+      </article>
+    </section>
+
+    <section class="dashboard-grid lower-grid">
+      <article class="panel" aria-labelledby="storageTitle">
+        <div class="section-heading">
+          <h2 id="storageTitle">Garage Storage Tree</h2>
+          <p>Garage -> shelf -> rack -> bin or loose -> item.</p>
+        </div>
+        <div id="storageTree" class="storage-tree"></div>
+      </article>
+
+      <article class="panel" aria-labelledby="addTitle">
+        <div class="section-heading">
+          <h2 id="addTitle">Add Gear Item</h2>
+          <p>Insertion updates the array catalog, hash table, and storage tree.</p>
+        </div>
+        <form id="addGearForm" class="add-form">
+          <label>Brand<input name="brand" required placeholder="Jetboil"></label>
+          <label>Name<input name="name" required placeholder="Propane Portable Stove"></label>
+          <label>Category<input name="category" required placeholder="Camp Kitchen / Food Prep"></label>
+          <label>Season
+            <select name="season">
+              <option>summer</option>
+              <option>winter</option>
+              <option>3-season</option>
+              <option>4-season</option>
+              <option>all-season</option>
+            </select>
+          </label>
+          <label>Size
+            <select name="size">
+              <option>small</option>
+              <option>medium</option>
+              <option>large</option>
+            </select>
+          </label>
+          <label>Storage Type
+            <select name="storageType">
+              <option>bin</option>
+              <option>loose</option>
+            </select>
+          </label>
+          <label>Shelf
+            <select name="shelf" id="addShelf"></select>
+          </label>
+          <label>Rack
+            <select name="rack">
+              <option>Rack 1</option>
+              <option>Rack 2</option>
+              <option>Rack 3</option>
+              <option>Rack 4</option>
+              <option>Rack 5</option>
+            </select>
+          </label>
+          <label>Container<input name="container" placeholder="Bin 3 or Loose"></label>
+          <label>Weight<input name="weight" type="number" min="0.1" step="0.1" value="1.0"></label>
+          <label>Bulk<input name="bulk" type="number" min="1" max="10" value="2"></label>
+          <label>Priority<input name="priority" type="number" min="1" max="5" value="3"></label>
+          <button type="submit">Insert gear item</button>
+        </form>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <p>Photo by Muhammad Masood on Unsplash, used under the Unsplash License. Digital Dream fonts by pizzadude.dk from the free commercial-use font set; license included in LICENSES.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+5/27/2026
+
+Overview:
+
+For the final project, students will design, implement, and evaluate a small application that demonstrates the use of multiple data structures and algorithms. The project should focus on how data structures are represented in the computer, how they are manipulated using basic operations, and how different implementations affect performance.
+
+Project Requirements:
+
+    • Implement at least two different data structures (e.g., array, linked list, stack, queue, tree, or hash table).
+    • Demonstrate basic operations such as insertion, deletion, searching, and traversal.
+    • Provide two different implementations of at least one data structure and compare them.
+    • Include an analysis of time and memory complexity for the main operations using Big O notation.
+
+Suggested Project Ideas:
+
+    • Student record management system
+    • Simple task scheduler using queues and priority queues
+    • File system simulation using tree structures
+    • Search engine prototype using lists and hash tables
+
+Project Deliverables:
+
+    • Source code of the application
+    • A short written report describing the data structures used
+    • Complexity analysis of key algorithms and operations
+    • A comparison of different data structure implementations
+
+Evaluation Criteria:
+
+    • Correct implementation of data structures and operations
+    • Clear representation of how data structures are stored and used
+    • Quality of comparison between implementations
+    • Accuracy of Big O time and memory complexity analysis
+    • Code readability and documentation
+
+Learning Outcomes Addressed:
+
+    • Show how data structures are represented in the computer
+    • Manipulate data structures with basic operations
+    • Compare different implementations of the same data structures
+    • Evaluate algorithms and data structures in terms of time and memory complexity using Big O notation
