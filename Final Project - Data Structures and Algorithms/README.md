@@ -173,6 +173,7 @@ For a non-technical field-by-field guide, valid values, and editing rules, read 
 - `DATA_GUIDE.md` - guide for replacing the sample camping gear data
 - `DESIGN.md` - palette, typography, background, accessibility, and UI conventions
 - `ATTRIBUTIONS.md` - Unsplash photo and font credits
+- `LICENSE` - MIT project license for this app
 - `LICENSES/pizzadude.dk License.txt` - included Digital Dream font license
 
 ## Design and Credits
@@ -189,3 +190,4 @@ Credits:
 
 - Photo by Muhammad Masood on Unsplash, used under the Unsplash License.
 - Digital Dream fonts by pizzadude.dk from the free commercial-use font set; license included in `LICENSES/`.
+- Project source code is released under the MIT License. Keep the copyright and license notice when using, sharing, or forking.
